@@ -5,10 +5,22 @@ class Agenda
       @email = email
     end
 
-    def salvarContato()
+    def salvarContatos()
       arquivo = File.new("agenda.txt", "a")
-      arquivo.puts '{"nome" => "%s", "numero" => "%s", "email" => "%s"}' % [@nome, @telefone, @email]
+      arquivo.puts '%s,%s,%s' % [@nome, @telefone, @email]
       arquivo.close
+    end
+
+    def self.listarContatos
+      if File.exists?("agenda.txt")
+        arquivo = File.new("agenda.txt", "r")
+        resultado = arquivo.readlines
+        resultado.each do |linha|
+          linha = linha.split(",")
+          puts "Contato #{linha[0]} -- Número #{linha[1]}  -- E-mail #{linha[3]}"
+        end
+        arquivo.close
+      end
     end
 end
 
@@ -56,8 +68,12 @@ def adicionarNovoContato()
 
   puts email
 
-  agenda = Agenda.new(nome, numero, email)
-  agenda.salvarContato()
+  $agenda = Agenda.new(nome, numero, email)
+  $agenda.salvarContatos()
+end
+
+def listarContatos()
+  Agenda.listarContatos
 end
 
 main()
