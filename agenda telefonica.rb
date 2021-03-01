@@ -24,14 +24,13 @@ def exibirMenu()
   puts "2 - Adicionar novo contato\n\n"
   
   while
-    opc = gets.chomp.to_i
-    if opc != 1 || opc != 2
+    opc = gets.chomp
+    if opc != "1" and opc != "2"
       puts "O número digitado não é uma opção"
     else 
       break 
     end
   end
-
 end
 
 def verificarAgenda()
@@ -42,7 +41,6 @@ def verificarAgenda()
   if erro.to_s == "No such file or directory @ rb_sysopen - agenda.txt"
     file = File.new("agenda.txt", "w")
   end
-
 end
 
 exibirMenu()
